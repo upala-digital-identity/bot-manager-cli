@@ -1,0 +1,10 @@
+{
+  "name": "@upala/bot-manager-cli",
+  "version": "0.1.0",
+  "description": "\"CLI tool for Upala bot managers\"",
+  "main": "index.js",
+  "repository": "https://github.com/upala-digital-identity/bot-manager-cli",
+  "author": "Petr Porobov",
+  "license": "MIT",
+  "private": false
+}
