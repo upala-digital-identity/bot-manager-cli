@@ -29,7 +29,8 @@ program
     })
 
 // todo list UpalaId
-// todo list rewards for a pool 
+// todo list rewards for a pool
+// list dai balance
 program
     .command('list')
     .description('List accounts under control')
