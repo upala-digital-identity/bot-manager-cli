@@ -6,5 +6,9 @@
   "repository": "https://github.com/upala-digital-identity/bot-manager-cli",
   "author": "Petr Porobov",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "commander": "^9.1.0",
+    "ethers": "^5.6.2"
+  }
 }

@@ -35,7 +35,7 @@ program
     .command('list')
     .description('List accounts under control')
     .action(async function () {
-        listHandler(config)
+        await listHandler(config)
     })
 
 // Will search for corresponding UpalaID (or will register one if necessary)
@@ -48,8 +48,8 @@ program
     .argument('<score>', 'Score assigned to the address')
     .argument('<bundleId>', 'Bundle ID')
     .argument('<proof>', 'Proof that address-score pair belongs to the Bundle ID')
-    .action(function (poolAddress, score, bundleId, proof) {
-        explodeHandler(config, poolAddress, score, bundleId, proof);
+    .action(function (poolAddress, scoreAssignedTo, score, bundleId, proof) {
+        explodeHandler(config, poolAddress, scoreAssignedTo, score, bundleId, proof);
     })
 
 program.parse(process.argv);

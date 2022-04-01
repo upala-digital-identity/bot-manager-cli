@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
-const { ethers, utils } = require('ethers')
-const { newIdentity } = require('@upala/unique-human')
+const { ethers } = require('ethers')
+const { newIdentity, explode } = require('@upala/unique-human')
 
 // TODO 
 // check transaction mining for transaction commands (withdraw, setBaseScore)
@@ -53,16 +53,18 @@ async function listHandler(config) {
     let wallet = getWallet(config)
     console.log(wallet.address)
 }
-
-async function explodeHandler(config, poolAddress, score, bundleId, proof) {
+async function explodeHandler(config, poolAddress, scoreAssignedTo, score, bundleId, proof) {
     if (config == null) { throw new Error('No config run \"init\" first.') }
     const wallet = getWallet(config)
+    // todo validate attack payload data
     attackPayload = {
+        poolAddress: poolAddress,
+        scoreAssignedTo: scoreAssignedTo,
         score: score, 
         bundleId: bundleId, 
         proof: proof
     }
-    let tx = await explode(wallet, poolAddress, attackPayload, upalaConstants)
+    let tx = await explode(wallet, attackPayload)
     console.log("Exploded. Transaction hash: %s", tx)
 }
 
