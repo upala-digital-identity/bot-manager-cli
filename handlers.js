@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const { ethers } = require('ethers')
-const { newIdentity, explode } = require('@upala/unique-human')
+const { newIdentity, explode, getDaiBalance } = require('@upala/unique-human')
 
 // TODO 
 // check transaction mining for transaction commands (withdraw, setBaseScore)
@@ -37,7 +37,7 @@ function initHandler(config, network) {
 
     const initialConfig = {
         chainId: networkID, // todo put rinkeby here (change to local for dev)
-        mnemonic: 'test test test test test test test test test test test junk',
+        mnemonic: ethers.Wallet.createRandom().mnemonic.phrase,
         ethNodeUrl: 'http://localhost:8545',  // use infura or alchemy here
     }
     fs.writeFileSync('config.json', JSON.stringify(initialConfig, null, 2))
@@ -51,20 +51,21 @@ async function registerHandler(config) {
 async function listHandler(config) {
     if (config == null) { throw new Error('No config run \"init\" first.') }
     let wallet = getWallet(config)
-    console.log(wallet.address)
+    let daiBalance = ethers.utils.formatEther(await getDaiBalance(wallet))
+    console.log('Address:', wallet.address, 'Dai: ',daiBalance)
 }
 async function explodeHandler(config, poolAddress, scoreAssignedTo, score, bundleId, proof) {
     if (config == null) { throw new Error('No config run \"init\" first.') }
     const wallet = getWallet(config)
     // todo validate attack payload data
-    attackPayload = {
+    explosionCheque = {
         poolAddress: poolAddress,
         scoreAssignedTo: scoreAssignedTo,
         score: score, 
         bundleId: bundleId, 
         proof: proof
     }
-    let tx = await explode(wallet, attackPayload)
+    let tx = await explode(wallet, explosionCheque)
     console.log("Exploded. Transaction hash: %s", tx)
 }
 
