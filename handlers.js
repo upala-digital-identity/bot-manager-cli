@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const { ethers } = require('ethers')
-const { newIdentity, explode, getDaiBalance } = require('@upala/unique-human')
+const { newIdentity, liquidate, getDaiBalance } = require('@upala/unique-human')
 
 // TODO 
 // check transaction mining for transaction commands (withdraw, setBaseScore)
@@ -30,7 +30,7 @@ function getWallet(config) {
 
 function initHandler(config, network) {
     if (config != null) { throw new Error("Config already exists")}
-
+    // todo use validNetworkID from upalaConstants
     let networkID
     if (network == '4' || network == "Rinkeby" || network == "Rinkeby") networkID = 4
     if (network == '31337' || network == 'local') networkID = 31337
@@ -45,7 +45,7 @@ function initHandler(config, network) {
 
 async function registerHandler(config) {
     if (config == null) { throw new Error('No config run \"init\" first.') }
-    console.log('Not inmplemented yet. Use explode command for now. It will take care for id registration')
+    console.log('Not inmplemented yet. Use liquidate command for now. It will take care for id registration')
 }
 
 async function listHandler(config) {
@@ -54,19 +54,19 @@ async function listHandler(config) {
     let daiBalance = ethers.utils.formatEther(await getDaiBalance(wallet))
     console.log('Address:', wallet.address, 'Dai: ',daiBalance)
 }
-async function explodeHandler(config, poolAddress, scoreAssignedTo, score, bundleId, proof) {
+async function liquidateHandler(config, poolAddress, scoreAssignedTo, score, bundleId, proof) {
     if (config == null) { throw new Error('No config run \"init\" first.') }
     const wallet = getWallet(config)
     // todo validate attack payload data
-    explosionCheque = {
+    liquidationCheque = {
         poolAddress: poolAddress,
         scoreAssignedTo: scoreAssignedTo,
         score: score, 
         bundleId: bundleId, 
         proof: proof
     }
-    let tx = await explode(wallet, explosionCheque)
-    console.log("Exploded. Transaction hash: %s", tx)
+    let tx = await liquidate(wallet, liquidationCheque)
+    console.log("Liquidated. Transaction hash: %s", tx)
 }
 
 module.exports = {
@@ -74,5 +74,5 @@ module.exports = {
     initHandler,
     registerHandler,
     listHandler,
-    explodeHandler
+    liquidateHandler
 }

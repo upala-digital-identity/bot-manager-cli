@@ -7,7 +7,7 @@ const {
     initHandler,
     registerHandler,
     listHandler,
-    explodeHandler } = require('./handlers.js')
+    liquidateHandler } = require('./handlers.js')
 
 const config = getConfig()
 
@@ -41,15 +41,15 @@ program
 // Will search for corresponding UpalaID (or will register one if necessary)
 // todo automatically pull score, bundleId, proof when graph or score explorer are ready
 program
-    .command('explode')
-    .description('Explode bot and get reward')
+    .command('liquidate')
+    .description('liquidate bot and get reward')
     .argument('<poolAddress>', 'Pool address to attack')
     .argument('<scoreAssignedTo>', 'Score bearing address')
     .argument('<score>', 'Score assigned to the address')
     .argument('<bundleId>', 'Bundle ID')
     .argument('<proof>', 'Proof that address-score pair belongs to the Bundle ID')
     .action(function (poolAddress, scoreAssignedTo, score, bundleId, proof) {
-        explodeHandler(config, poolAddress, scoreAssignedTo, score, bundleId, proof);
+        liquidateHandler(config, poolAddress, scoreAssignedTo, score, bundleId, proof);
     })
 
 program.parse(process.argv);
