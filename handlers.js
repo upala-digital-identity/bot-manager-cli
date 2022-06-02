@@ -20,9 +20,10 @@ function saveNewConfig(newConfig) {
     fs.writeFileSync('config.json', JSON.stringify(newConfig, null, 2))
 }
 
-function getWallet(config) {
+function getWallet(config, leaf = 0) {
+    const HDpath = 'm/44\'/60\'/0\'/0/'
     const provider = new ethers.providers.JsonRpcProvider(config.ethNodeUrl)
-    return ethers.Wallet.fromMnemonic(config.mnemonic).connect(provider)
+    return ethers.Wallet.fromMnemonic(config.mnemonic, HDpath + leaf).connect(provider)
 }
 
 
@@ -34,6 +35,8 @@ function initHandler(config, network) {
     let networkID
     if (network == '4' || network == "Rinkeby" || network == "Rinkeby") networkID = 4
     if (network == '31337' || network == 'local') networkID = 31337
+    if (network == '100' || network == 'xDai' || network == 'xdai' || network == 'gnosis' || network == 'Gnosis') networkID = 100
+
 
     const initialConfig = {
         chainId: networkID, // todo put rinkeby here (change to local for dev)
@@ -48,15 +51,27 @@ async function registerHandler(config) {
     console.log('Not inmplemented yet. Use liquidate command for now. It will take care for id registration')
 }
 
-async function listHandler(config) {
+// list info for wallets from range
+async function listHandler(config, range) {
     if (config == null) { throw new Error('No config run \"init\" first.') }
-    let wallet = getWallet(config)
-    let daiBalance = ethers.utils.formatEther(await getDaiBalance(wallet))
-    console.log('Address:', wallet.address, 'Dai: ',daiBalance)
+    if (!range) {
+        for (let i = 0; i <= 10; i++) {
+            let wallet = getWallet(config, i)
+            let balance = ethers.utils.formatEther(await wallet.getBalance())
+            let daiBalance = ethers.utils.formatEther(await getDaiBalance(wallet))
+            // console.log('Address:', wallet.address, 'Dai: ',daiBalance)
+
+            console.log('%s: %s, eth: %s, dai: %s', i, wallet.address, balance, daiBalance)
+
+          }
+
+        
+    }
 }
-async function liquidateHandler(config, poolAddress, scoreAssignedTo, score, bundleId, proof) {
+
+async function liquidateHandler(config, id, poolAddress, scoreAssignedTo, score, bundleId, proof) {
     if (config == null) { throw new Error('No config run \"init\" first.') }
-    const wallet = getWallet(config)
+    const wallet = getWallet(config, id)
     // todo validate attack payload data
     liquidationCheque = {
         poolAddress: poolAddress,

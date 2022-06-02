@@ -16,7 +16,7 @@ program.version('0.0.1');
 program
     .command('init')
     .description('Creates config file and generates wallets')
-    .argument('<network>', 'Network by name (e.g. rinkeby)') // TODO
+    .argument('<network>', 'Network by name (e.g. rinkeby, gnosis)') // TODO
     .action(function (network) {
         initHandler(config, network);
 });
@@ -43,13 +43,14 @@ program
 program
     .command('liquidate')
     .description('liquidate bot and get reward')
+    .argument('<id>', 'Wallet id in mnemonic')
     .argument('<poolAddress>', 'Pool address to attack')
     .argument('<scoreAssignedTo>', 'Score bearing address')
     .argument('<score>', 'Score assigned to the address')
     .argument('<bundleId>', 'Bundle ID')
     .argument('<proof>', 'Proof that address-score pair belongs to the Bundle ID')
-    .action(function (poolAddress, scoreAssignedTo, score, bundleId, proof) {
-        liquidateHandler(config, poolAddress, scoreAssignedTo, score, bundleId, proof);
+    .action(function (id, poolAddress, scoreAssignedTo, score, bundleId, proof) {
+        liquidateHandler(config, id, poolAddress, scoreAssignedTo, score, bundleId, proof);
     })
 
 program.parse(process.argv);
