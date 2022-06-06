@@ -54,6 +54,35 @@ From left to right you got:
 
 #### - trick human verification method
 
+Find an Upala group that uses a human verification method that you can hack. If you think your efforts cost less than the score group provides, you can earn by creating bots and then liquidating them for the reward (reward = score).
+
+If you you wanna play around with the Upala protocol try creating your own group. See [group manager CLI](https://github.com/upala-digital-identity/group-manager-cli).
+
 #### - liquidate
 
+To liquidate (explode) your bot use the following command.
+
     node index.js liquidate <id> <poolAddress> <scoreAssignedTo> <score> <bundleId> <proof>
+
+This command will create an Upala ID for the selected address (addresses) and immediately liquidate it (them). The address will get the liquidation reward equal to the score.
+
+- **id** - Wallet id in mnemonic (account id within your bot army)
+- **poolAddress** - Pool address to attack
+- **scoreAssignedTo** - Score bearing address (or Upala ID)
+- **score** - Score assigned to the address
+- **bundleId** - Bundle ID
+- **proof** - Proof that address-score pair belongs to the Bundle ID (called **signature** in score bundles)
+
+All parameters (except id) should be available in score bundle JSON provided by the group you are attacking. For an example see [publish user scores on-chain](https://github.com/upala-digital-identity/group-manager-cli#--publish-user-scores-on-chain) section of group manager CLI.
+
+## Other commands
+
+#### Send dai
+
+Sends DAI to a specified address
+
+TBD
+
+#### List available commands:
+
+    node index.js -h
