@@ -2,6 +2,11 @@
 
 Tools for Upala bot managers. Create, manage bots via command line or integrate with your software. The lib behind this CLI is [unique-human-lib](https://github.com/upala-digital-identity/unique-human-lib)
 
+## Where can I find an Upala group to attack?
+
+Check [this table](https://airtable.com/shryDoWDCZ5yTGSvo) to find an Upala group with real money in its pools. Join [Upala Discord](https://discord.gg/y2ztpwgZxg) and follow **upala-groups** channel in the **MACHINES** section to get notified about new Upala groups. Please let us know, what type of notification system you would prefer in the future.
+
+
 ## Quickstart
 
 Steps in this section will let you create your **bot army**! Use it to drain pools of the groups which you can get access to. Just trick their human verification methods. If you already know a group like that please welcome!
