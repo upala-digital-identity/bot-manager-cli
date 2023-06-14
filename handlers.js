@@ -72,7 +72,7 @@ async function keysHandler(config, range) {
     if (!range) {
         for (let i = 0; i <= 10; i++) {
             let wallet = getWallet(config, i)
-            console.log('%s: %s, pub: %s, priv: %s', i, wallet.address, wallet.privateKey)
+            console.log('%s: %s, priv: %s', i, wallet.address, wallet.privateKey)
         }
     }
 }
