@@ -64,11 +64,18 @@ async function listHandler(config, range) {
             console.log('%s: %s, eth: %s, dai: %s', i, wallet.address, balance, daiBalance)
 
           }
-
-        
     }
 }
 
+async function keysHandler(config, range) {
+    if (config == null) { throw new Error('No config run \"init\" first.') }
+    if (!range) {
+        for (let i = 0; i <= 10; i++) {
+            let wallet = getWallet(config, i)
+            console.log('%s: %s, pub: %s, priv: %s', i, wallet.address, wallet.privateKey)
+        }
+    }
+}
 async function liquidateHandler(config, id, poolAddress, scoreAssignedTo, score, bundleId, proof) {
     if (config == null) { throw new Error('No config run \"init\" first.') }
     const wallet = getWallet(config, id)
@@ -89,5 +96,6 @@ module.exports = {
     initHandler,
     registerHandler,
     listHandler,
-    liquidateHandler
+    liquidateHandler,
+    keysHandler,
 }

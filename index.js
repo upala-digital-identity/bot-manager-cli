@@ -7,7 +7,8 @@ const {
     initHandler,
     registerHandler,
     listHandler,
-    liquidateHandler } = require('./handlers.js')
+    liquidateHandler,
+    keysHandler } = require('./handlers.js')
 
 const config = getConfig()
 
@@ -30,12 +31,20 @@ program
 
 // todo list UpalaId
 // todo list rewards for a pool
+// todo range
 // list dai balance
 program
     .command('list')
     .description('List accounts under control')
     .action(async function () {
         await listHandler(config)
+    })
+
+program
+    .command('keys')
+    .description('List private keys of accounts under control')
+    .action(async function () {
+        await keysHandler(config)
     })
 
 // Will search for corresponding UpalaID (or will register one if necessary)
