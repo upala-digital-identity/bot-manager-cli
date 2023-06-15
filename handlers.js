@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const { ethers } = require('ethers')
-const { newIdentity, liquidate, getDaiBalance } = require('@upala/unique-human')
+const { newIdentity, liquidate, getDaiBalance, getUpalaID } = require('@upala/unique-human')
 
 // TODO 
 // check transaction mining for transaction commands (withdraw, setBaseScore)
@@ -59,9 +59,9 @@ async function listHandler(config, range) {
             let wallet = getWallet(config, i)
             let balance = ethers.utils.formatEther(await wallet.getBalance())
             let daiBalance = ethers.utils.formatEther(await getDaiBalance(wallet))
+            let upalaID = await getUpalaID(wallet)
             // console.log('Address:', wallet.address, 'Dai: ',daiBalance)
-
-            console.log('%s: %s, eth: %s, dai: %s', i, wallet.address, balance, daiBalance)
+            console.log('%s: %s, eth: %s, dai: %s, upalaID: %s', i, wallet.address, balance, daiBalance, upalaID)
 
           }
     }
